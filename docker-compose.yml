@@ -1,0 +1,36 @@
+version: '3'
+services:
+  vote:
+    image: 151557938866.dkr.ecr.us-east-1.amazonaws.com/lks-voting-image:vote-dev-latest
+    ports:
+      - "80:80"
+    networks:
+      - appnet
+
+  result:
+    image: 151557938866.dkr.ecr.us-east-1.amazonaws.com/lks-voting-image:result-dev-latest
+    ports:
+      - "81:80"
+    networks:
+      - appnet
+
+  worker:
+    image: 151557938866.dkr.ecr.us-east-1.amazonaws.com/lks-voting-image:worker-dev-latest
+    networks:
+      - appnet
+
+  redis:
+    image: redis:alpine
+    networks:
+      - appnet
+
+  db:
+    image: postgres:13
+    environment:
+      POSTGRES_PASSWORD: postgres
+    networks:
+      - appnet
+
+networks:
+  appnet:
+
